@@ -1,12 +1,18 @@
-package yaarpg
+package server
 
 import (
 	"math/rand"
+	"time"
 
 	"github.com/Notserc/go-pixel/internal/pkg/ecs"
 	"github.com/Notserc/go-pixel/internal/pkg/server/components"
 	"github.com/Notserc/go-pixel/internal/pkg/server/systems"
 )
+
+type Server struct {
+	World      *ecs.World
+	lastUpdate time.Time
+}
 
 func createWorld() (world *ecs.World) {
 	world = ecs.NewWorld()
@@ -22,15 +28,31 @@ func createBall(world *ecs.World) {
 		Y: 0.0,
 	}
 	speed := components.Speed{
-		VX: 10.0 * rand.Float64(),
-		VY: 10.0 * rand.Float64(),
+		VX: 2*rand.Float64() - 1,
+		VY: 2*rand.Float64() - 1,
 	}
 	collidable := components.Collidable{
 		Radius: 0.05,
 	}
+	renderable := components.Renderable{
+		Char: '1',
+	}
 	world.AddComponent(ball, &position)
 	world.AddComponent(ball, &speed)
 	world.AddComponent(ball, &collidable)
+	world.AddComponent(ball, &renderable)
+}
+
+func Init() *Server {
+	server := Server{
+		World:      createWorld(),
+		lastUpdate: time.Now()}
+	createArea(server.World)
+	for i := 1; i < 10000; i++ {
+		createBall(server.World)
+		createBall(server.World)
+	}
+	return &server
 }
 
 func createArea(world *ecs.World) {
@@ -44,12 +66,8 @@ func createArea(world *ecs.World) {
 	world.AddComponent(area, &areaComp)
 }
 
-func Run() {
-	world := createWorld()
-	createArea(world)
-	createBall(world)
-	createBall(world)
-	for i := 0; i < 20; i++ {
-		world.Update(0.032)
-	}
+func (server *Server) Run() {
+	dt := time.Since(server.lastUpdate).Seconds()
+	server.World.Update(dt)
+	server.lastUpdate = time.Now()
 }

@@ -1,8 +1,6 @@
 package systems
 
 import (
-	"fmt"
-
 	"github.com/Notserc/go-pixel/internal/pkg/ecs"
 	c "github.com/Notserc/go-pixel/internal/pkg/server/components"
 )
@@ -24,8 +22,8 @@ func registerSystemDraw(world *ecs.World) {
 func (self *SystemDraw) Update(dt float64) {
 	for _, entity := range self.World.Entities {
 		if self.World.HasComponents(entity, self.RequiredTypes()) {
-			position := c.GetPosition(entity, self.World)
-			fmt.Printf("Entity %v (%v, %v)\n", entity, position.X, position.Y)
+			//	position := c.GetPosition(entity, self.World)
+			//	fmt.Printf("Entity %v (%v, %v)\n", entity, position.X, position.Y)
 		}
 	}
 }
