@@ -5,7 +5,7 @@ type emptyVal struct{}
 type World struct {
 	nextEntity Entity
 	Entities   []Entity
-	managers   map[ComponentType]*ComponentManager
+	managers   []*ComponentManager
 	systems    []*System
 }
 
@@ -13,7 +13,7 @@ func NewWorld() *World {
 	return &World{
 		nextEntity: 0,
 		Entities:   make([]Entity, 0, 10000),
-		managers:   make(map[ComponentType]*ComponentManager),
+		managers:   make([]*ComponentManager, 100),
 		systems:    make([]*System, 0)}
 }
 

@@ -6,7 +6,7 @@ type Renderable struct {
 	Char rune
 }
 
-var RenderableType ecs.ComponentType = "renderable"
+var RenderableType ecs.ComponentType = 3
 
 func (self *Renderable) Type() *ecs.ComponentType {
 	return &RenderableType

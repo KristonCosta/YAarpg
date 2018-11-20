@@ -9,7 +9,7 @@ type Position struct {
 	Y float64
 }
 
-var PositionType ecs.ComponentType = "position"
+var PositionType ecs.ComponentType = 2
 
 func (*Position) Type() *ecs.ComponentType {
 	return &PositionType

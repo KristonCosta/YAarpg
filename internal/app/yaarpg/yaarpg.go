@@ -64,14 +64,15 @@ func run() {
 	)
 
 	batch := pixel.NewBatch(&pixel.TrianglesData{}, spritesheet)
-	_ = pixel.NewSprite(spritesheet, treesFrames[rand.Intn(len(treesFrames))])
+	tree := pixel.NewSprite(spritesheet, treesFrames[rand.Intn(len(treesFrames))])
+	defer profile.Start().Stop()
 	for !win.Closed() {
 
 		server.Run()
 		for _, entity := range server.World.Entities {
 			if server.World.HasComponents(entity, &renderTypes) {
-				// position := components.GetPosition(entity, server.World)
-				// tree.Draw(batch, pixel.IM.Moved(pixel.V(position.X*512+512, position.Y*384+384)))
+				position := components.GetPosition(entity, server.World)
+				tree.Draw(batch, pixel.IM.Moved(pixel.V(position.X*512+512, position.Y*384+384)))
 
 			}
 		}
@@ -91,6 +92,6 @@ func run() {
 }
 
 func Run() {
-	defer profile.Start().Stop()
+
 	pixelgl.Run(run)
 }

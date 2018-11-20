@@ -8,7 +8,7 @@ type Collidable struct {
 	Radius float64
 }
 
-var CollidableType ecs.ComponentType = "collidable"
+var CollidableType ecs.ComponentType = 1
 
 func (*Collidable) Type() *ecs.ComponentType {
 	return &CollidableType

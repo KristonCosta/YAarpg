@@ -48,7 +48,7 @@ func Init() *Server {
 		World:      createWorld(),
 		lastUpdate: time.Now()}
 	createArea(server.World)
-	for i := 1; i < 10000; i++ {
+	for i := 1; i < 5000; i++ {
 		createBall(server.World)
 		createBall(server.World)
 	}

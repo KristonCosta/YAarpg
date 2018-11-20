@@ -1,3 +1,3 @@
 package ecs
 
-type Entity = int64
+type Entity = int

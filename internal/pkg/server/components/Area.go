@@ -11,7 +11,7 @@ type Area struct {
 	Bottom float64
 }
 
-var AreaType ecs.ComponentType = "area"
+var AreaType ecs.ComponentType = 0
 
 func (*Area) Type() *ecs.ComponentType {
 	return &AreaType
