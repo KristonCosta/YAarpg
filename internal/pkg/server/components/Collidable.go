@@ -1,14 +1,14 @@
 package components
 
 import (
+	"github.com/Notserc/go-pixel/internal/pkg/containers"
 	"github.com/Notserc/go-pixel/internal/pkg/ecs"
 )
 
 type Collidable struct {
-	Radius float64
+	Radius           float64
+	CollidedEntities *containers.Stack
 }
-
-var CollidableType ecs.ComponentType = 1
 
 func (*Collidable) Type() *ecs.ComponentType {
 	return &CollidableType

@@ -16,7 +16,6 @@ import (
 	"github.com/faiface/pixel"
 
 	"github.com/faiface/pixel/pixelgl"
-	"github.com/pkg/profile"
 	"golang.org/x/image/colornames"
 )
 
@@ -59,28 +58,32 @@ func run() {
 		}
 	}
 	var (
-		frames = 0
-		second = time.Tick(time.Second)
+		frames    = 0
+		second    = time.Tick(time.Second)
+		frameTime = time.Tick(time.Millisecond * 16)
 	)
 
 	batch := pixel.NewBatch(&pixel.TrianglesData{}, spritesheet)
 	tree := pixel.NewSprite(spritesheet, treesFrames[rand.Intn(len(treesFrames))])
-	defer profile.Start().Stop()
 	for !win.Closed() {
-
 		server.Run()
-		for _, entity := range server.World.Entities {
-			if server.World.HasComponents(entity, &renderTypes) {
-				position := components.GetPosition(entity, server.World)
-				tree.Draw(batch, pixel.IM.Moved(pixel.V(position.X*512+512, position.Y*384+384)))
+		select {
+		case <-frameTime:
+			for _, entity := range server.World.Entities {
+				if server.World.HasComponents(entity, &renderTypes) {
+					position := components.GetPosition(entity, server.World)
+					tree.Draw(batch, pixel.IM.Moved(pixel.V(position.X*512+512, position.Y*384+384)))
 
+				}
 			}
+			frames++
+			win.Clear(colornames.Aliceblue)
+			batch.Draw(win)
+			win.Update()
+			batch.Clear()
+		default:
 		}
-		frames++
-		win.Clear(colornames.Aliceblue)
-		batch.Draw(win)
-		win.Update()
-		batch.Clear()
+
 		select {
 		case <-second:
 			win.SetTitle(fmt.Sprintf("%s | FPS: %d", cfg.Title, frames))
@@ -92,6 +95,5 @@ func run() {
 }
 
 func Run() {
-
 	pixelgl.Run(run)
 }

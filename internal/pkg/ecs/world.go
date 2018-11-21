@@ -36,7 +36,9 @@ func (world *World) RemoveEntity(entity Entity) {
 		}
 	}
 	for _, manager := range world.managers {
-		manager.deleteEntity(entity)
+		if manager != nil {
+			manager.deleteEntity(entity)
+		}
 	}
 }
 

@@ -4,6 +4,8 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/Notserc/go-pixel/internal/pkg/containers"
+
 	"github.com/Notserc/go-pixel/internal/pkg/ecs"
 	"github.com/Notserc/go-pixel/internal/pkg/server/components"
 	"github.com/Notserc/go-pixel/internal/pkg/server/systems"
@@ -32,7 +34,8 @@ func createBall(world *ecs.World) {
 		VY: 2*rand.Float64() - 1,
 	}
 	collidable := components.Collidable{
-		Radius: 0.05,
+		Radius:           0.05,
+		CollidedEntities: containers.NewStack(),
 	}
 	renderable := components.Renderable{
 		Char: '1',
@@ -48,7 +51,7 @@ func Init() *Server {
 		World:      createWorld(),
 		lastUpdate: time.Now()}
 	createArea(server.World)
-	for i := 1; i < 5000; i++ {
+	for i := 1; i < 3; i++ {
 		createBall(server.World)
 		createBall(server.World)
 	}

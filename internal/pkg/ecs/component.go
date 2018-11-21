@@ -13,9 +13,9 @@ type ComponentManager struct {
 
 func newManager() *ComponentManager {
 	var manager ComponentManager
-	components := make([]Component, 10000)
+	components := make([]Component, 500000)
 	manager = ComponentManager{
-		entities:   make([]Entity, 10000),
+		entities:   make([]Entity, 500000),
 		components: components}
 	return &manager
 }
@@ -36,6 +36,9 @@ func (manager *ComponentManager) addEntity(entity Entity, component Component) {
 func (manager *ComponentManager) deleteEntity(entity Entity) {
 	// delete(manager.components, entity)
 
+	manager.components[entity] = nil
+	println(entity)
+	return
 	var index int
 	for i, v := range manager.entities {
 		if v == entity {

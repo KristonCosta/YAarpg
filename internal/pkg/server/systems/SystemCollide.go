@@ -3,11 +3,13 @@ package systems
 import (
 	"github.com/Notserc/go-pixel/internal/pkg/ecs"
 	c "github.com/Notserc/go-pixel/internal/pkg/server/components"
+	"github.com/SolarLune/resolv/resolv"
 )
 
 type SystemCollide struct {
 	World *ecs.World
 	Types []ecs.ComponentType
+	space *resolv.Space
 }
 
 func registerSystemCollide(world *ecs.World) {
@@ -15,6 +17,7 @@ func registerSystemCollide(world *ecs.World) {
 	collide = &SystemCollide{
 		World: world,
 		Types: []ecs.ComponentType{c.PositionType, c.CollidableType, c.SpeedType},
+		space: resolv.NewSpace(),
 	}
 	world.AddSystem(&collide)
 }

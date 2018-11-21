@@ -9,8 +9,6 @@ type Speed struct {
 	VY float64
 }
 
-var SpeedType ecs.ComponentType = 4
-
 func (*Speed) Type() *ecs.ComponentType {
 	return &SpeedType
 }
